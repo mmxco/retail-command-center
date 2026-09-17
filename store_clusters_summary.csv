@@ -1,0 +1,51 @@
+store_id,region,store_tier,cluster_id,cluster_label,markdown_dependency,sell_through_velocity,shrinkage_rate,gmroi
+STORE_101,NorthEast,Flagship Tier 1,0,Capital-Efficient Flagships,0.0879,0.3209,0.0125,17.88
+STORE_102,Central,Flagship Tier 1,1,Balanced Regional Performers,0.1582,0.2495,0.0202,10.35
+STORE_103,SouthEast,Flagship Tier 1,0,Capital-Efficient Flagships,0.0829,0.3067,0.0132,16.8
+STORE_104,West,Flagship Tier 1,1,Balanced Regional Performers,0.1678,0.2574,0.0193,11.17
+STORE_105,NorthEast,Flagship Tier 1,0,Capital-Efficient Flagships,0.0863,0.3301,0.0126,19.12
+STORE_106,Central,Flagship Tier 1,1,Balanced Regional Performers,0.1685,0.2527,0.0199,10.28
+STORE_107,SouthEast,Flagship Tier 1,0,Capital-Efficient Flagships,0.0827,0.3094,0.0132,16.87
+STORE_108,West,Flagship Tier 1,1,Balanced Regional Performers,0.1682,0.2403,0.0184,10.12
+STORE_109,NorthEast,Flagship Tier 1,0,Capital-Efficient Flagships,0.0864,0.2969,0.0135,16.16
+STORE_110,Central,Flagship Tier 1,1,Balanced Regional Performers,0.164,0.2541,0.0193,10.68
+STORE_111,SouthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1633,0.2287,0.0201,9.21
+STORE_112,West,Regional Mall Tier 2,1,Balanced Regional Performers,0.1618,0.2466,0.0195,10.53
+STORE_113,NorthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1575,0.2504,0.0197,10.88
+STORE_114,Central,Regional Mall Tier 2,3,High-Risk Shrinkage Anomalies,0.1611,0.2371,0.0551,9.17
+STORE_115,SouthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.163,0.231,0.0203,9.3
+STORE_116,West,Regional Mall Tier 2,1,Balanced Regional Performers,0.1656,0.2467,0.0203,10.53
+STORE_117,NorthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1611,0.2537,0.0188,10.49
+STORE_118,Central,Regional Mall Tier 2,2,Discount-Addicted Outliers,0.4234,0.2159,0.0194,5.94
+STORE_119,SouthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1536,0.2471,0.0188,10.37
+STORE_120,West,Regional Mall Tier 2,1,Balanced Regional Performers,0.1663,0.2368,0.0203,9.75
+STORE_121,NorthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1665,0.2645,0.0185,11.45
+STORE_122,Central,Regional Mall Tier 2,1,Balanced Regional Performers,0.1558,0.2355,0.0193,9.8
+STORE_123,SouthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1563,0.2489,0.0194,10.68
+STORE_124,West,Regional Mall Tier 2,1,Balanced Regional Performers,0.1653,0.2552,0.0183,11.01
+STORE_125,NorthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1651,0.2467,0.0209,10.12
+STORE_126,Central,Regional Mall Tier 2,3,High-Risk Shrinkage Anomalies,0.1587,0.2604,0.0535,11.01
+STORE_127,SouthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1694,0.2497,0.0196,10.03
+STORE_128,West,Regional Mall Tier 2,1,Balanced Regional Performers,0.1574,0.2272,0.0199,9.34
+STORE_129,NorthEast,Regional Mall Tier 2,2,Discount-Addicted Outliers,0.4024,0.2152,0.0201,5.98
+STORE_130,Central,Regional Mall Tier 2,1,Balanced Regional Performers,0.1632,0.24,0.019,9.67
+STORE_131,SouthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1553,0.2315,0.0204,9.33
+STORE_132,West,Regional Mall Tier 2,1,Balanced Regional Performers,0.1567,0.2352,0.0203,9.34
+STORE_133,NorthEast,Regional Mall Tier 2,1,Balanced Regional Performers,0.1629,0.2447,0.0196,10.15
+STORE_134,Central,Regional Mall Tier 2,1,Balanced Regional Performers,0.1699,0.233,0.0204,9.65
+STORE_135,SouthEast,Regional Mall Tier 2,2,Discount-Addicted Outliers,0.4061,0.2183,0.0193,6.1
+STORE_136,West,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1604,0.227,0.0206,8.74
+STORE_137,NorthEast,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1634,0.2365,0.02,9.33
+STORE_138,Central,Strip/Outlet Tier 3,3,High-Risk Shrinkage Anomalies,0.1578,0.2446,0.0569,9.63
+STORE_139,SouthEast,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.164,0.232,0.0194,9.57
+STORE_140,West,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1564,0.2202,0.0205,8.89
+STORE_141,NorthEast,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.161,0.2501,0.0219,10.51
+STORE_142,Central,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.161,0.2519,0.0189,10.72
+STORE_143,SouthEast,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.162,0.2282,0.0199,9.47
+STORE_144,West,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1579,0.262,0.0206,10.95
+STORE_145,NorthEast,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1628,0.2314,0.0209,9.26
+STORE_146,Central,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1601,0.2451,0.019,10.12
+STORE_147,SouthEast,Strip/Outlet Tier 3,2,Discount-Addicted Outliers,0.4201,0.1994,0.0219,5.35
+STORE_148,West,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1664,0.2445,0.0204,10.25
+STORE_149,NorthEast,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.1618,0.2306,0.0193,9.44
+STORE_150,Central,Strip/Outlet Tier 3,1,Balanced Regional Performers,0.161,0.2238,0.0199,9.13
