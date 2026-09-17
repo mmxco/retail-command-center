@@ -391,15 +391,15 @@ def create_synchronized_valuation_figure(df_projected: pd.DataFrame) -> go.Figur
     # --------------------------------------------------------------------------
     fig.update_layout(
         template="plotly_dark",
-        height=680,
+        height=720,
         barmode="group",
-        margin=dict(l=20, r=20, t=55, b=20),
+        margin=dict(l=20, r=20, t=30, b=80),
         legend=dict(
             orientation="h",
-            yanchor="bottom",
-            y=1.03,
-            xanchor="left",
-            x=0.0,
+            yanchor="top",
+            y=-0.15,
+            xanchor="center",
+            x=0.5,
         ),
         hovermode="x unified",
     )
