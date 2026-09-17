@@ -558,7 +558,7 @@ def main() -> None:
             xaxis=dict(title="Accounting Period"),
             hovermode="x unified",
         )
-        st.plotly_chart(fig_asset, use_container_width=True)
+        st.plotly_chart(fig_asset, width="stretch")
 
     with tab2:
         st.markdown("#### Top-Line Revenue Lift vs. Bottom-Line Profit Destruction")
@@ -616,7 +616,7 @@ def main() -> None:
             xaxis=dict(title="Accounting Period"),
             hovermode="x unified",
         )
-        st.plotly_chart(fig_margin, use_container_width=True)
+        st.plotly_chart(fig_margin, width="stretch")
 
     # --------------------------------------------------------------------------
     # AI MERCHANT ADVISOR / CFO RISK BRIEF
