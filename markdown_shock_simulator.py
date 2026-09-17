@@ -551,14 +551,24 @@ def main() -> None:
 
         fig_asset.update_layout(
             template="plotly_dark",
-            height=420,
-            margin=dict(l=20, r=20, t=30, b=20),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            height=430,
+            margin=dict(l=20, r=20, t=55, b=20),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.05,
+                xanchor="left",
+                x=0.0,
+            ),
             yaxis=dict(title="Ending Inventory Asset Value at Cost ($)", tickformat="$,.0f"),
             xaxis=dict(title="Accounting Period"),
             hovermode="x unified",
         )
-        st.plotly_chart(fig_asset, width="stretch")
+        st.plotly_chart(
+            fig_asset,
+            width="stretch",
+            config={"displaylogo": False, "modeBarButtonsToRemove": ["lasso2d", "select2d"]},
+        )
 
     with tab2:
         st.markdown("#### Top-Line Revenue Lift vs. Bottom-Line Profit Destruction")
@@ -602,9 +612,15 @@ def main() -> None:
         fig_margin.update_layout(
             template="plotly_dark",
             barmode="group",
-            height=420,
-            margin=dict(l=20, r=20, t=30, b=20),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            height=430,
+            margin=dict(l=20, r=20, t=55, b=20),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.05,
+                xanchor="left",
+                x=0.0,
+            ),
             yaxis=dict(title="Net Sales Revenue ($)", tickformat="$,.0f"),
             yaxis2=dict(
                 title="Gross Margin Dollar Profit ($)",
@@ -616,7 +632,11 @@ def main() -> None:
             xaxis=dict(title="Accounting Period"),
             hovermode="x unified",
         )
-        st.plotly_chart(fig_margin, width="stretch")
+        st.plotly_chart(
+            fig_margin,
+            width="stretch",
+            config={"displaylogo": False, "modeBarButtonsToRemove": ["lasso2d", "select2d"]},
+        )
 
     # --------------------------------------------------------------------------
     # AI MERCHANT ADVISOR / CFO RISK BRIEF
