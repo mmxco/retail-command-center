@@ -83,6 +83,33 @@ def load_store_dataset() -> pd.DataFrame:
         return generate_mock_store_history(store_id="STORE_104", n_months=24)
 
 
+@st.cache_data
+def load_store_clusters() -> Dict[str, str]:
+    """Loads store_id -> cluster_label mapping as assessed by the KNN/KMeans clustering model."""
+    root_dir = Path(__file__).resolve().parent
+    summary_path = root_dir / "store_clusters_summary.csv"
+    if summary_path.exists():
+        try:
+            cdf = pd.read_csv(summary_path)
+            if "store_id" in cdf.columns and "cluster_label" in cdf.columns:
+                return dict(zip(cdf["store_id"], cdf["cluster_label"]))
+        except Exception:
+            pass
+
+    pipeline_path = root_dir / "models" / "store_cluster_pipeline.joblib"
+    if pipeline_path.exists():
+        try:
+            import joblib
+            bundle = joblib.load(pipeline_path)
+            sdf = bundle.get("store_summary_df")
+            if sdf is not None and "cluster_label" in sdf.columns:
+                return dict(zip(sdf["store_id"], sdf["cluster_label"]))
+        except Exception:
+            pass
+
+    return {}
+
+
 # ==============================================================================
 # FORWARD 12-PERIOD SIMULATION ENGINE
 # ==============================================================================
@@ -424,6 +451,7 @@ def render_valuation_forensics_dashboard() -> None:
     st.caption("Retail Book Value vs. Balance Sheet Asset Valuation (Cost) Under Progressive Markdown Shocks")
 
     df_full = load_store_dataset()
+    cluster_map = load_store_clusters()
     store_list = sorted(df_full["store_id"].unique())
     default_idx = store_list.index("STORE_104") if "STORE_104" in store_list else 0
 
@@ -434,11 +462,19 @@ def render_valuation_forensics_dashboard() -> None:
             "Select Store Location",
             options=store_list,
             index=default_idx,
+            format_func=lambda s: f"{s} — [{cluster_map.get(s, 'Balanced Regional Performers')}]",
             help="Choose an apparel store to project its forward 12-month balance sheet.",
         )
 
         store_meta = df_full[df_full["store_id"] == selected_store].iloc[0]
-        st.info(f"**Tier:** {store_meta.get('store_tier', 'Standard')}\n\n**Region:** {store_meta.get('region', 'National')}")
+        assigned_cluster = cluster_map.get(
+            selected_store, store_meta.get("anomaly_profile", "Balanced Regional Performers")
+        )
+        st.info(
+            f"**KNN Cluster:** {assigned_cluster}\n\n"
+            f"**Tier:** {store_meta.get('store_tier', 'Standard')}\n\n"
+            f"**Region:** {store_meta.get('region', 'National')}"
+        )
 
         st.markdown("---")
         markdown_shock = st.slider(

@@ -107,6 +107,33 @@ def load_rim_data() -> pd.DataFrame:
         return generate_mock_apparel_data()
 
 
+@st.cache_data
+def load_store_clusters() -> Dict[str, str]:
+    """Loads store_id -> cluster_label mapping as assessed by the KNN/KMeans clustering model."""
+    root_dir = Path(__file__).resolve().parent
+    summary_path = root_dir / "store_clusters_summary.csv"
+    if summary_path.exists():
+        try:
+            cdf = pd.read_csv(summary_path)
+            if "store_id" in cdf.columns and "cluster_label" in cdf.columns:
+                return dict(zip(cdf["store_id"], cdf["cluster_label"]))
+        except Exception:
+            pass
+
+    pipeline_path = root_dir / "models" / "store_cluster_pipeline.joblib"
+    if pipeline_path.exists():
+        try:
+            import joblib
+            bundle = joblib.load(pipeline_path)
+            sdf = bundle.get("store_summary_df")
+            if sdf is not None and "cluster_label" in sdf.columns:
+                return dict(zip(sdf["store_id"], sdf["cluster_label"]))
+        except Exception:
+            pass
+
+    return {}
+
+
 # ==============================================================================
 # RIM SIMULATION MATHEMATICS
 # ==============================================================================
@@ -367,6 +394,7 @@ def main() -> None:
 
     # Load dataset
     df = load_rim_data()
+    cluster_map = load_store_clusters()
     all_stores = sorted(df["store_id"].unique())
     default_store_idx = all_stores.index("STORE_104") if "STORE_104" in all_stores else 0
 
@@ -380,11 +408,19 @@ def main() -> None:
             "📍 Store Location",
             options=all_stores,
             index=default_store_idx,
+            format_func=lambda s: f"{s} — [{cluster_map.get(s, 'Balanced Regional Performers')}]",
             help="Select any store location across Flagship, Regional Mall, or Outlet tiers.",
         )
 
         store_meta = df[df["store_id"] == selected_store].iloc[0]
-        st.info(f"**Tier:** {store_meta['store_tier']}\n\n**Region:** {store_meta['region']}")
+        assigned_cluster = cluster_map.get(
+            selected_store, store_meta.get("anomaly_profile", "Balanced Regional Performers")
+        )
+        st.info(
+            f"**KNN Cluster:** {assigned_cluster}\n\n"
+            f"**Tier:** {store_meta['store_tier']}\n\n"
+            f"**Region:** {store_meta['region']}"
+        )
 
         horizon = st.radio(
             "📅 Simulation Horizon",
