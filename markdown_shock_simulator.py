@@ -307,13 +307,11 @@ Provide exactly 3 concise, high-impact executive bullet points:
 3. Actionable Guardrails: Specific markdown timing and promotional throttle recommendation for merchandising leadership.
 Use professional, executive finance language.
 """
-            # Support modern model with fallback
+            # Support modern model with fallback using SDK recommended chat session
             for model_name in ["gemini-3.8-flash", "gemini-2.5-flash"]:
                 try:
-                    response = client.models.generate_content(
-                        model=model_name,
-                        contents=prompt,
-                    )
+                    chat = client.chats.create(model=model_name)
+                    response = chat.send_message(prompt)
                     return response.text
                 except Exception:
                     continue
