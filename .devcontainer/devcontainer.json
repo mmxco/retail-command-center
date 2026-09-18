@@ -1,0 +1,29 @@
+{
+  "name": "Retail AI Command Center (GitHub Container)",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+  "forwardPorts": [8501],
+  "portsAttributes": {
+    "8501": {
+      "label": "Streamlit Command Center",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "remoteUser": "appuser",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/venv/bin/python",
+        "python.terminal.activateEnvironment": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "postAttachCommand": "streamlit --version"
+}

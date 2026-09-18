@@ -1,0 +1,35 @@
+# ==============================================================================
+# Retail Command Center: Production & GitHub Containerization Compose
+# Supports local multi-stage build or pulling directly from GitHub Container Registry
+# ==============================================================================
+services:
+  retail-command-center:
+    image: ghcr.io/${GHCR_OWNER:-mmxco}/retail-command-center:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: ${IMAGE_TAG:-1.0.0}
+        REPO_URL: https://github.com/${GHCR_OWNER:-mmxco}/retail-command-center
+    container_name: retail-command-center
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      # Streamlit production parameters
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+      # Injected runtime keys with fallbacks for frictionless pre-sales evaluation
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-mock-gemini-eval-key}
+      - AUTOGEN_USE_DOCKER=False
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

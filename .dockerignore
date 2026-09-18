@@ -1,0 +1,81 @@
+# ==============================================================================
+# .dockerignore - Retail Command Center Container Exclusion Matrix
+# Hardened for enterprise pre-sales review & multi-stage Docker build hygiene
+# ==============================================================================
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.env/
+
+# Python bytecode, compilation, and cache structures
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Sensitive secrets, environment files, and credential keys
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.pfx
+*.cert
+*.crt
+credentials.json
+token.json
+client_secret*.json
+*client_secret*.json
+service_account*.json
+*.pub
+
+# Git version control & GitHub Dev metadata
+.git/
+.gitignore
+.gitattributes
+.github/
+.devcontainer/
+
+# Local testing, coverage, and CI artifacts
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# Build & packaging artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# IDE, OS, and editor metadata
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local documentation drafts, notes, and scratch artifacts
+*.md
+!README.md
+ORIGINAL_REQUEST.md
+scratch/
+notes/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+*.temp
