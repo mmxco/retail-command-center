@@ -1,6 +1,6 @@
 # 🛍️ Retail AI Pre-Sales Command Center
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://bookish-cod-vxrq4p6pqqgfpvwp-8501.app.github.dev/)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mmxco/retail-command-center)
 
 > 💡 **Browser Launch Note**: When Codespaces finishes initializing, Google Chrome or Edge may block the new tab automatically. If the Streamlit dashboard doesn't appear in a new window:
 > 1. Look for the **Pop-up blocked** icon (🚫) in your browser address bar and select **"Always allow pop-ups from github.dev"**, OR
@@ -24,7 +24,7 @@ The **Retail AI Pre-Sales Command Center** addresses the $100B+ margin-leakage p
 
 1. **Phase 1 (Discovery)**: Eliminates 15+ hours of pre-sales account research by crawling target apparel domains and generating tailored executive dossiers via token-efficient Small Language Models (SLMs) in under 60 seconds.
 2. **Phase 2 (Autonomous Multi-Agent Ops)**: Resolves critical omnichannel stockouts using a multi-agent negotiation committee (Microsoft AutoGen v0.2) that autonomously balances store demand, regional distribution, and vendor contracts under a strict human-in-the-loop ERP governance gate.
-3. **Phase 3 (Valuation Forensics & ML Clustering)**: Demonstrates the mathematical distortion of the Retail Inventory Method (RIM), proving clearance markdowns artificially depress balance sheet inventory valuations. Employs Scikit-Learn KNN store clustering ($k=4$) and Gemini Pro "AI CFO" risk briefings to quantify immediate enterprise ROI.
+3. **Phase 3 (Valuation Forensics & ML Clustering)**: Illuminates the structural nuances of the Retail Inventory Method (RIM), demonstrating how clearance markdowns can disproportionately impact balance sheet inventory valuations. Employs Scikit-Learn KNN store clustering ($k=4$) and Gemini Pro "AI CFO" risk briefings to quantify immediate enterprise ROI.
 
 ---
 
@@ -84,35 +84,35 @@ Tab 2 demonstrates autonomous supply chain crisis resolution using **Microsoft A
 
 ## 📊 Tab 3 Deep Dive: RIM Valuation Forensics & Predictive Store Clustering
 
-Tab 3 exposes the structural flaw of the **Retail Inventory Method (RIM)**—the predominant inventory accounting standard in enterprise apparel retail—and pairs it with predictive machine learning.
+Tab 3 illuminates the structural dynamics and downstream financial impacts of the **Retail Inventory Method (RIM)**—the predominant inventory accounting standard in enterprise apparel retail—and pairs it with predictive machine learning to offer vital visibility to finance teams.
 
-### 1. The Structural Flaw of RIM Accounting
+### 1. The Structural Dynamics of RIM Accounting
 Under standard GAAP/IFRS retail inventory accounting, ending inventory cost is calculated by multiplying ending inventory at retail by the cumulative **Cost-to-Retail Ratio ($C/R$)**:
 
 $$\text{Ending Inventory Cost} = \text{Ending Inventory Retail} \times \left( \frac{\text{Cost of Goods Available}}{\text{Retail Value of Goods Available}} \right)$$
 
-When store operators take aggressive clearance markdowns ($D$) to clear seasonal overhang, the retail value of goods sold and on hand plummets, but the historical markon complement remains static. Consequently:
-* Clearance markdowns **artificially deflate the balance sheet valuation** of ending inventory.
-* Reported gross margins experience severe, unwarranted compression.
-* Working capital ratios deteriorate regardless of actual physical unit inventory health.
+When store operators execute necessary clearance markdowns ($D$) to clear seasonal overhang, the retail value of goods sold and on hand drops, but the historical markon complement remains static. Consequently, this dynamic provides crucial visibility into how operational moves affect the bottom line:
+* Clearance markdowns **can disproportionately reduce the balance sheet valuation** of ending inventory.
+* Reported gross margins may experience unexpected compression, obscuring actual operational performance.
+* Working capital ratios may appear less favorable, creating a disconnect between financial metrics and actual physical inventory health.
 
 ### 2. Multi-Period Balance Sheet Simulator
 * Built upon a mathematically verified 50-store, 24-month rolling apparel dataset (1,200 observations).
 * Enforces strict period-over-period roll-forward integrity:
   $$\text{Beginning Inventory}_{T+1} \equiv \text{Ending Inventory}_T$$
-* Features an interactive **Markdown Shock Simulator (+0% to +50%)** dynamically demonstrating balance sheet asset deflation across store tiers.
+* Features an interactive **Markdown Shock Simulator (+0% to +50%)** dynamically demonstrating balance sheet asset impacts across store tiers to aid in predictive financial planning.
 
 ### 3. Predictive Store Clustering & KNN Peer Benchmarking
 * **Scikit-Learn Pipeline (`KMeans`, $k=4$)**: Segregates store networks into 4 operational archetypes based on sales velocity, markdown exposure, and shrinkage rates:
   1. 🟢 **Capital-Efficient Flagships**: High turn rate, low markdown dependency ($<15\%$), superior GMROI.
   2. 🔵 **Balanced Regional Performers**: Stable margins, moderate turnover, predictable replenishment.
-  3. 🟠 **Discount-Addicted Outliers**: Excessive clearance dependency ($>30\%$), deflated ending inventory cost valuations.
+  3. 🟠 **Discount-Reliant Outliers**: Higher clearance dependency ($>30\%$), impacting ending inventory cost valuations.
   4. 🔴 **High-Risk Shrinkage Anomalies**: Disproportionate unrecorded book-to-physical inventory loss ($>3.5\%$).
 * **KNN Peer Benchmarking**: Nearest-neighbor Euclidean distance matching identifies top 3 peer stores for targeted corrective merchandising.
 
 ### 4. Gemini Pro "AI CFO" & Dynamic Value Realization Calculator
-* **AI CFO Briefings**: Live dashboard parameters are parsed by Gemini Pro to produce an executive risk memo detailing balance sheet exposure, gross margin erosion, and working capital vulnerability.
-* **Dynamic Value Realization Engine**: Projects 3-year cumulative ROI and payback periods based on store count, markdown mitigation (8–18 bps), and shrinkage recovery.
+* **AI CFO Briefings**: Live dashboard parameters are parsed by Gemini Pro to produce an executive risk memo detailing balance sheet exposure, gross margin impacts, and working capital shifts.
+* **Dynamic Value Realization Engine**: Projects 3-year cumulative ROI and payback periods based on store count, markdown optimization (8–18 bps), and shrinkage recovery.
 
 ---
 
@@ -143,7 +143,7 @@ docker run -d `
 ```
 
 ### 3. GitHub Codespaces / Dev Containers
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://bookish-cod-vxrq4p6pqqgfpvwp-8501.app.github.dev/)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mmxco/retail-command-center)
 
 > 💡 **Browser Launch Note**: When Codespaces finishes initializing, Google Chrome or Edge may block the new tab automatically. If the Streamlit dashboard doesn't appear in a new window:
 > 1. Look for the **Pop-up blocked** icon (🚫) in your browser address bar and select **"Always allow pop-ups from github.dev"**, OR
