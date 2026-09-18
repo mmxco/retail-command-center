@@ -1,29 +1,39 @@
 {
-  "name": "Retail AI Command Center (GitHub Container)",
+  "name": "Retail AI Command Center (Codespaces)",
   "build": {
-    "dockerfile": "../Dockerfile",
+    "dockerfile": "Dockerfile",
     "context": ".."
+  },
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.formatting.provider": "none",
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "tamasfe.even-better-toml"
+      ]
+    }
   },
   "forwardPorts": [8501],
   "portsAttributes": {
     "8501": {
       "label": "Streamlit Command Center",
-      "onAutoForward": "openBrowser"
+      "onAutoForward": "openBrowser",
+      "elevateIfNeeded": false
     }
   },
-  "remoteUser": "appuser",
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "python.defaultInterpreterPath": "/opt/venv/bin/python",
-        "python.terminal.activateEnvironment": true
-      },
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-azuretools.vscode-docker"
-      ]
-    }
+  "containerEnv": {
+    "GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY:mock_gemini_api_key_sandbox_mode}",
+    "GOOGLE_DOCS_CREDENTIALS": "${localEnv:GOOGLE_DOCS_CREDENTIALS:mock_docs_oauth_token}",
+    "MOCK_DATA_FALLBACK": "true",
+    "ENVIRONMENT": "cloud-codespace"
   },
-  "postAttachCommand": "streamlit --version"
+  "postAttachCommand": "nohup streamlit run app.py --server.port=8501 --server.address=0.0.0.0 > /tmp/streamlit.log 2>&1 &"
 }
