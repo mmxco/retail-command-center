@@ -47,3 +47,7 @@ venv.bak/
 # OS
 .DS_Store
 Thumbs.db
+
+# Agent Run Logs & Working State
+.agents/
+ORIGINAL_REQUEST.md

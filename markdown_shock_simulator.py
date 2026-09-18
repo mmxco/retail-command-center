@@ -380,10 +380,11 @@ def main() -> None:
             padding: 16px;
         }
         .stMetric {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--secondary-background-color, #F8FAFC);
             border-radius: 6px;
             padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(128, 128, 128, 0.2);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
         </style>
     """, unsafe_allow_html=True)

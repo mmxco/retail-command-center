@@ -1,0 +1,515 @@
+{
+  "standard": {
+    "id": "standard",
+    "title": "Standard Stockout",
+    "icon": "\ud83d\udfe2",
+    "description": "Store #104 has 0 units of SKU-4092; 50 units required for weekend promotion.",
+    "sourcing_summary": "Intra-store rebalance from Store #109 (18 units) + Vendor expedited drop-ship (32 units).",
+    "default_demand": 50,
+    "governance_status": "AUTO-APPROVED (< $25,000 threshold)",
+    "messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\ud83d\udea8 **CRITICAL STORE ESCALATION**: Store #104 (Denver Downtown) is at **0 units on-hand** for **SKU-4092 (Vintage Stretch Denim, 32x32)**. Our regional marketing blitz begins in **48 hours**, with forecasted promotional demand of **50 units**.\n\nWe cannot tolerate customer register walkaways during this peak window. I need immediate fulfillment confirmation within 48 hours."
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Acknowledged, Store Ops. Merchandising is actively analyzing regional network buffers to protect gross margins and avoid unnecessary third-party freight fees.\n\nCalling `validate_stock_levels(sku='SKU-4092')` to evaluate regional DC and sibling store availability.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [STANDARD NETWORK] ===\n- Sibling Store #109 (Boulder): 18 units on-hand (WOS: 6.4 \u2014 transferrable excess buffer; 12h transit via local courier).\n- DC Central: 50 units available (Standard ground: 96h [SLA BREACH]; expedited courier: 48h).\n- DC East: 0 units on-hand.\n- RECOMMENDATION: Immediate peer-to-peer transfer of 18 units from Store #109. Deficit of 32 units requires external supplier drop-ship."
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Network audit complete: **Store #109** holds 18 units of transferable safety stock and can deliver within 12 hours via regional courier.\n\nHowever, that leaves an immediate deficit of **32 units**. Reaching out to **Vendor Procurement Lead** to secure expedited drop-ship from our primary supplier `VEND-DENIM-CORP`."
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Engaging primary denim vendor `VEND-DENIM-CORP`. Standard vendor terms mandate an MOQ of 50 units at \\$39.00/unit with 5-day standard shipping. Checking catalog terms and negotiating emergency split order.\n\nExecuting `lookup_vendor_catalog_price(vendor_id='VEND-DENIM-CORP', sku='SKU-4092')`.",
+        "tool_call": {
+          "tool": "lookup_vendor_catalog_price",
+          "args": {
+            "vendor_id": "VEND-DENIM-CORP",
+            "sku": "SKU-4092"
+          },
+          "result": "=== VENDOR CATALOG TERMS: VEND-DENIM-CORP | SKU-4092 ===\n- Wholesale Price: $39.00 / unit\n- Standard Minimum Order Quantity (MOQ): 50 units\n- Standard Lead Time: 5 business days\n- Emergency Air Expedite SLA: 48 hours available with rush surcharge of $4.50/unit ($144.00 total rush fee).\n- MOQ Waiver: APPROVED for emergency store stockout rebalance (32 units accepted)."
+        }
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Supplier agreed to waive the 50-unit MOQ! They will drop-ship exactly **32 units** directly to Store #104 via 48-hour priority air courier at \\$39.00/unit + \\$4.50/unit rush surcharge.\n\n- **Goods Cost**: 32 \u00d7 \\$39.00 = \\$1,248.00\n- **Rush Expedited Freight**: 32 \u00d7 \\$4.50 = \\$144.00\n- **Total Commitment**: **\\$1,392.00**\n\nExecuting `generate_purchase_order` now.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "VEND-DENIM-CORP",
+            "sku": "SKU-4092",
+            "units": 32,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 144.0,
+            "delivery_window_hours": 48
+          },
+          "result": "### [EDI 850 PURCHASE ORDER CONFIRMATION]\n- **PO Reference Number**: `PO-850-2026-9042`\n- **Vendor ID**: VEND-DENIM-CORP\n- **Line Item SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Ordered Units**: 32 units\n- **Base Wholesale Subtotal**: $1,248.00\n- **Expedited Freight Surcharge**: $144.00\n- **Total Financial Commitment**: $1,392.00\n- **Committed Delivery SLA**: 48 hours guaranteed\n- **Approval Status**: STATUS: AUTO-APPROVED (Under $25,000 threshold) [APPROVAL_REQUIRED: FALSE]\n- **EDI Status**: TRANSMITTED_AND_ACKNOWLEDGED"
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has converged on a certified dual-sourcing fulfillment plan:\n\n- **Target Store**: Store #104 (Denver Downtown)\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Total Replenished Demand**: **50 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfer (Store #109)**: **18 units** (Transit: 12h via regional courier; transfer cost: \\$45.00)\n  2. **Vendor Expedited Drop-Ship (VEND-DENIM-CORP)**: **32 units** (Transit: 48h air freight; PO: `PO-850-2026-9042`)\n- **Total Expediting Surcharges**: **\\$144.00** (\\$4.50/unit on 32 vendor units)\n- **Total Capital Commitment**: **\\$1,392.00**\n- **Governance Gate**: **AUTO-APPROVED** (Spending \\$1,392.00 is well below the \\$25,000.00 autonomous threshold)\n- **Service Level Agreement**: 100% of units delivered within 48h promotional deadline. Zero register walkaways.\n\nTERMINATE"
+      }
+    ],
+    "metrics": {
+      "allocated_units": 50,
+      "transfer_units": 18,
+      "vendor_units": 32,
+      "transfer_source": "Store #109 (Boulder)",
+      "vendor_source": "VEND-DENIM-CORP",
+      "expediting_surcharges": 144.0,
+      "total_commitment": 1392.0,
+      "governance_badge": "\ud83d\udfe2 AUTO-APPROVED",
+      "sla_hours": 48
+    }
+  },
+  "port_strike": {
+    "id": "port_strike",
+    "title": "West Coast Port Strike / Vendor Lockout",
+    "icon": "\ud83d\udea2",
+    "description": "Longshoremen strike freezes inbound ocean freight. Primary supplier locked out (21-day delay).",
+    "sourcing_summary": "Intra-network emergency store sweep: Store #109 (18u) + Store #212 (32u). Zero vendor reliance.",
+    "default_demand": 50,
+    "governance_status": "AUTO-APPROVED (< $25,000 threshold)",
+    "messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\ud83d\udea8 **CRITICAL STORE ESCALATION [SUPPLY DISRUPTION ALERT]**: Store #104 has **0 units on-hand** for **SKU-4092**. 50 units needed for the 48-hour promotional launch. West Coast dockworkers have halted port container processing\u2014can we still obtain inventory?"
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Checking supplier status. Calling `lookup_vendor_catalog_price(vendor_id='VEND-DENIM-CORP', sku='SKU-4092')` with acute port strike disruption context.",
+        "tool_call": {
+          "tool": "lookup_vendor_catalog_price",
+          "args": {
+            "vendor_id": "VEND-DENIM-CORP",
+            "sku": "SKU-4092"
+          },
+          "result": "=== VENDOR CATALOG TERMS: VEND-DENIM-CORP [ALERT: PORT STRIKE LOCKOUT] ===\n- STATUS: INBOUND_CONTAINERS_FROZEN\n- Estimated Port Clearing Delay: 21 to 28 days\n- Available Domestic Stock: 0 units\n- Vendor cannot meet 48-hour promotional SLA under any expedite pricing.\n- ADVISORY: Cancel vendor replenishment order. Direct demand to intra-network inventory sweep."
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Primary vendor drop-ship is completely blocked by the maritime dispute. Initiating an emergency intra-store rebalance sweep across all Tier 2 regional stores.\n\nExecuting `validate_stock_levels(sku='SKU-4092')`.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [EMERGENCY NETWORK SWEEP] ===\n- Sibling Store #109 (Boulder): 18 units on-hand (WOS: 6.2 \u2014 excess buffer; 12h delivery).\n- Sibling Store #212 (Colorado Springs): 32 units on-hand (WOS: 7.8 \u2014 slow-moving stock; 18h delivery).\n- DC Central: 50 units (Frozen in container queue).\n- Network Sweep Total: 50 units available across sister locations without vendor dependency."
+        }
+      },
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "Excellent news! Sibling **Store #109** (18 units) and **Store #212** (32 units) provide exactly the 50 units needed. Local courier shuttles can have all 50 units on our sales floor within 18 hours, well before the 48-hour promotion starts!"
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "No external vendor purchase order is required. Reallocating freight budget toward dedicated local hot-shot couriers (\\$180.00 total transit charge). Generating EDI inter-store transfer authorization."
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has converged on an emergency intra-network sweep plan:\n\n- **Target Store**: Store #104 (Denver Downtown)\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Disruption Profile**: West Coast Port Strike / Primary Vendor Lockout\n- **Total Replenished Demand**: **50 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfer (Store #109)**: **18 units** (12h hot-shot transit)\n  2. **Intra-Store Transfer (Store #212)**: **32 units** (18h hot-shot transit)\n  3. **Vendor External Drop-Ship**: **0 units** (Avoided 21-day port lockout)\n- **Total Expediting Surcharges**: **\\$180.00** (Local bonded inter-store courier)\n- **Total Capital Commitment**: **\\$180.00** (Zero wholesale inventory spend; capitalized existing assets)\n- **Governance Gate**: **AUTO-APPROVED** (Well below the \\$25,000.00 ceiling)\n- **SLA Compliance**: 100% of demand fulfilled in < 24 hours. Full margin preservation.\n\nTERMINATE"
+      }
+    ],
+    "metrics": {
+      "allocated_units": 50,
+      "transfer_units": 50,
+      "vendor_units": 0,
+      "transfer_source": "Store #109 (18u) + Store #212 (32u)",
+      "vendor_source": "None (Vendor Locked Out)",
+      "expediting_surcharges": 180.0,
+      "total_commitment": 180.0,
+      "governance_badge": "\ud83d\udfe2 AUTO-APPROVED",
+      "sla_hours": 18
+    }
+  },
+  "viral_spike": {
+    "id": "viral_spike",
+    "title": "Viral Demand Spike (+300% / Mandatory HITL Gate)",
+    "icon": "\ud83d\udcf1",
+    "description": "Social media viral spike explodes demand to 800 units ($31,200.00 commitment). Exceeds $25,000 threshold.",
+    "sourcing_summary": "Store #109 (18u) + Emergency vendor production run of 782 units. Halts for Consultant Sign-off.",
+    "default_demand": 800,
+    "governance_status": "\ud83d\udee1\ufe0f MANDATORY HITL APPROVAL GATE",
+    "requires_hitl": true,
+    "messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\ud83d\udd25 **EMERGENCY DEMAND SURGE**: A viral TikTok fashion influencer featured SKU-4092 denim! Store foot traffic and digital reservations have skyrocketed. Our revised 48-hour demand has surged by **+300% to 800 units**!\n\nWe need all available inventory across the network and an emergency supplier production run immediately."
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Checking network availability for 800 units. Calling `validate_stock_levels(sku='SKU-4092')`.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [VIRAL SURGE AUDIT] ===\n- Sibling Store #109: 18 units max transferable.\n- Sibling Store #212: 12 units available.\n- Total Network Buffer: 30 units.\n- UNMET DEFICIT: 770 units must be sourced via emergency vendor commitment."
+        }
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Negotiating with emergency domestic distributor `DIST-DOMESTIC-EMERGENCY` for 770 units at \\$39.00/unit with priority cross-dock shipping of \\$1,170.00.\n\n- **Goods Subtotal**: 770 \u00d7 \\$39.00 = \\$30,030.00\n- **Freight Fee**: \\$1,170.00\n- **Total Commitment**: **\\$31,200.00**\n\nAttempting automated PO execution via `generate_purchase_order`.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "DIST-DOMESTIC-EMERGENCY",
+            "sku": "SKU-4092",
+            "units": 770,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 1170.0,
+            "delivery_window_hours": 48,
+            "consultant_approved": false
+          },
+          "result": "### [REQUISITION AUDIT: HITL APPROVAL REQUIRED]\n- **Proposed PO Reference**: `PO-850-2026-9042`\n- **Status**: STATUS: HITL_APPROVAL_REQUIRED (APPROVAL_REQUIRED: TRUE)\n- **Total Financial Commitment**: $31,200.00\n- **Autonomous Authority Ceiling**: $25,000.00\n- **Budget Delta Over Threshold**: +$6,200.00\n- **Risk Assessment**: Capital commitment exceeds autonomous authorization ceiling ($25,000.00). Autonomous execution HALTED. Interactive Human-in-the-Loop (HITL) consultant sign-off REQUIRED."
+        }
+      },
+      {
+        "sender": "Consultant_Approver",
+        "content": "\ud83d\udee1\ufe0f **CONSULTANT GOVERNANCE REVIEW**: I am reviewing the \\$31,200.00 requisition for 770 units. Viral sell-through velocity is verified at > 92%, and gross margin forecast (\\$78,000 retail revenue vs \\$31,200 cost) delivers a healthy 60% gross margin. Risk of inventory write-down is minimal.\n\n**EXECUTIVE DECISION**: Overriding spending limit. Requisition is **FORMALLY AUTHORIZED**."
+      },
+      {
+        "sender": "Admin_Executor",
+        "content": "Re-submitting purchase order with verified consultant authorization.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "DIST-DOMESTIC-EMERGENCY",
+            "sku": "SKU-4092",
+            "units": 770,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 1170.0,
+            "delivery_window_hours": 48,
+            "consultant_approved": true
+          },
+          "result": "### [EDI 850 PURCHASE ORDER CONFIRMATION]\n- **PO Reference Number**: `PO-850-2026-9042-AUTH`\n- **Vendor ID**: DIST-DOMESTIC-EMERGENCY\n- **Line Item SKU**: SKU-4092\n- **Ordered Units**: 770 units\n- **Total Financial Commitment**: $31,200.00\n- **Committed Delivery SLA**: 48 hours\n- **Approval Status**: STATUS: CONSULTANT-APPROVED (Authorized by HITL Consultant)\n- **Governance Tag**: CONSULTANT_AUTHORIZED\n- **EDI Status**: TRANSMITTED_AND_ACKNOWLEDGED"
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has resolved the viral surge with HITL governance:\n\n- **Target Store**: Store #104 (Denver Downtown)\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Disruption Profile**: Viral TikTok Demand Spike (+300% Demand Expansion)\n- **Total Replenished Demand**: **800 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfers (Store #109 & #212)**: **30 units** (Immediate 12h local shuttle)\n  2. **Emergency Domestic Distributor**: **770 units** (PO: `PO-850-2026-9042-AUTH`)\n- **Total Expediting Surcharges**: **\\$1,170.00**\n- **Total Capital Commitment**: **\\$31,200.00**\n- **Governance Gate**: **HITL SIGN-OFF COMPLETED** (Authorized by Consultant_Approver over \\$25k ceiling)\n- **Financial Return**: \\$78,000 projected retail sales with protected 60% gross margin.\n\nTERMINATE"
+      }
+    ],
+    "rejected_messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\ud83d\udd25 **EMERGENCY DEMAND SURGE**: A viral TikTok fashion influencer featured SKU-4092 denim! Store foot traffic and digital reservations have skyrocketed. Our revised 48-hour demand has surged by **+300% to 800 units**!\n\nWe need all available inventory across the network and an emergency supplier production run immediately."
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Checking network availability for 800 units. Calling `validate_stock_levels(sku='SKU-4092')`.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [VIRAL SURGE AUDIT] ===\n- Sibling Store #109: 18 units max transferable.\n- Sibling Store #212: 12 units available.\n- Total Network Buffer: 30 units.\n- UNMET DEFICIT: 770 units must be sourced via emergency vendor commitment."
+        }
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Negotiating with emergency domestic distributor `DIST-DOMESTIC-EMERGENCY` for 770 units at \\$39.00/unit with priority cross-dock shipping of \\$1,170.00.\n\n- **Goods Subtotal**: 770 \u00d7 \\$39.00 = \\$30,030.00\n- **Freight Fee**: \\$1,170.00\n- **Total Commitment**: **\\$31,200.00**\n\nAttempting automated PO execution via `generate_purchase_order`.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "DIST-DOMESTIC-EMERGENCY",
+            "sku": "SKU-4092",
+            "units": 770,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 1170.0,
+            "delivery_window_hours": 48,
+            "consultant_approved": false
+          },
+          "result": "### [REQUISITION AUDIT: HITL APPROVAL REQUIRED]\n- **Proposed PO Reference**: `PO-850-2026-9042`\n- **Status**: STATUS: HITL_APPROVAL_REQUIRED (APPROVAL_REQUIRED: TRUE)\n- **Total Financial Commitment**: $31,200.00\n- **Autonomous Authority Ceiling**: $25,000.00\n- **Budget Delta Over Threshold**: +$6,200.00\n- **Risk Assessment**: Capital commitment exceeds autonomous authorization ceiling ($25,000.00). Autonomous execution HALTED. Interactive Human-in-the-Loop (HITL) consultant sign-off REQUIRED."
+        }
+      },
+      {
+        "sender": "Consultant_Approver",
+        "content": "\ud83d\udee1\ufe0f **CONSULTANT GOVERNANCE REVIEW [REQUISITION REJECTED]**: I have reviewed the \\$31,200.00 emergency requisition for 770 units. The proposed expenditure exceeds our corporate autonomous spending limit (\\$25,000.00) by **+\\$6,200.00**.\n\n**EXECUTIVE DECISION**: In order to strictly preserve balance sheet working capital and limit seasonal markdown exposure, the overage is **REJECTED**. The order is instructed to be **CAPPED at the \\$25,000.00 threshold** (611 units), with the remaining deficit absorbed through regional store buffers."
+      },
+      {
+        "sender": "Admin_Executor",
+        "content": "Re-submitting adjusted purchase order enforcing corporate \\$25,000.00 spending ceiling.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "DIST-DOMESTIC-EMERGENCY",
+            "sku": "SKU-4092",
+            "units": 611,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 917.0,
+            "delivery_window_hours": 48,
+            "consultant_approved": false
+          },
+          "result": "### [EDI 850 PURCHASE ORDER CONFIRMATION - CAPPED AT CEILING]\n- **PO Reference Number**: `PO-850-2026-9042-CAPPED`\n- **Vendor ID**: DIST-DOMESTIC-EMERGENCY\n- **Line Item SKU**: SKU-4092\n- **Ordered Units**: 611 units (Capped from 770 requested)\n- **Base Wholesale Subtotal**: $23,829.00\n- **Expedited Shipping**: $917.00\n- **Total Financial Commitment**: $24,746.00\n- **Committed Delivery SLA**: 48 hours\n- **Approval Status**: STATUS: CAPPED_AT_LIMIT (Enforcing $25k Ceiling)\n- **Governance Tag**: CAPITAL_CEILING_ENFORCED\n- **EDI Status**: TRANSMITTED_AND_ACKNOWLEDGED"
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has concluded under Executive Capped Governance:\n\n- **Target Store**: Store #104 (Denver Downtown)\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Disruption Profile**: Viral TikTok Demand Spike (Executive Capped Allocation)\n- **Total Replenished Demand**: **641 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfers (Store #109 & #212)**: **30 units** (Immediate 12h local shuttle)\n  2. **Emergency Domestic Distributor (Capped PO)**: **611 units** (PO: `PO-850-2026-9042-CAPPED`)\n- **Total Expediting Surcharges**: **\\$917.00**\n- **Total Capital Commitment**: **\\$24,746.00**\n- **Governance Gate**: **\u26a0\ufe0f REQUISITION REJECTED / CAPPED AT \\$25K** (Capital ceiling enforced)\n- **Financial Return**: \\$63,459 projected retail revenue; working capital limit strictly maintained.\n\nTERMINATE"
+      }
+    ],
+    "metrics": {
+      "allocated_units": 800,
+      "transfer_units": 30,
+      "vendor_units": 770,
+      "transfer_source": "Store #109 & #212",
+      "vendor_source": "DIST-DOMESTIC-EMERGENCY",
+      "expediting_surcharges": 1170.0,
+      "total_commitment": 31200.0,
+      "governance_badge": "\ud83d\udee1\ufe0f HITL SIGN-OFF COMPLETED",
+      "sla_hours": 48
+    },
+    "pending_metrics": {
+      "allocated_units": 30,
+      "transfer_units": 30,
+      "vendor_units": 770,
+      "transfer_source": "Store #109 & #212",
+      "vendor_source": "DIST-DOMESTIC-EMERGENCY (PENDING SIGN-OFF)",
+      "expediting_surcharges": 1170.0,
+      "total_commitment": 31200.0,
+      "governance_badge": "\ud83d\udea8 PENDING HITL APPROVAL",
+      "sla_hours": 48
+    },
+    "rejected_metrics": {
+      "allocated_units": 641,
+      "transfer_units": 30,
+      "vendor_units": 611,
+      "transfer_source": "Store #109 & #212",
+      "vendor_source": "DIST-DOMESTIC-EMERGENCY (CAPPED)",
+      "expediting_surcharges": 917.0,
+      "total_commitment": 24746.0,
+      "governance_badge": "\u26a0\ufe0f REQUISITION REJECTED / CAPPED AT $25K",
+      "sla_hours": 48
+    }
+  },
+  "air_charter": {
+    "id": "air_charter",
+    "title": "Emergency Air Charter Fleet Rebalance ($38.5k / Mandatory HITL Gate)",
+    "icon": "\u2708\ufe0f",
+    "description": "Multi-region supply shock during holiday promotional launch. Dedicated cargo air charter required ($38,500 commitment) exceeding $25k limit.",
+    "sourcing_summary": "Store #109 (50u) + Dedicated air charter of 850 units. Halts for Consultant Sign-off.",
+    "default_demand": 900,
+    "governance_status": "\ud83d\udee1\ufe0f MANDATORY HITL APPROVAL GATE",
+    "requires_hitl": true,
+    "messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\ud83d\udea8 **FLEET-WIDE STOCKOUT CRISIS**: A nationwide marketing blitz has depleted inventory across all regional flagship locations. Store #104, #101, and #118 require **900 total units** of SKU-4092 within **36 hours**.\n\nGround freight and scheduled rail cannot meet this window. We need an emergency air cargo solution immediately."
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Auditing regional distribution and sister stores for 900 units across Denver, Boston, and Chicago. Calling `validate_stock_levels(sku='SKU-4092')`.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [FLEET SURGE AUDIT] ===\n- Sister Store #109 (Boulder): 50 units transferable excess.\n- Regional DCs: 0 units available.\n- FLEET DEFICIT: 850 units must be sourced via dedicated air charter freight."
+        }
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Contracting chartered cargo logistics partner `CHARTER-AIR-CARGO` for 850 units at wholesale \\$39.00/unit plus a dedicated chartered Boeing 737 cargo block fee of \\$3,400.00 and handling fees (\\$1,950.00).\n\n- **Wholesale Goods**: 850 \u00d7 \\$39.00 = \\$33,150.00\n- **Charter Flight Surcharge**: \\$3,400.00\n- **Emergency Ramp Handling**: \\$1,950.00\n- **Total Financial Commitment**: **\\$38,500.00**\n\nAttempting automated PO execution via `generate_purchase_order`.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "CHARTER-AIR-CARGO",
+            "sku": "SKU-4092",
+            "units": 850,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 5350.0,
+            "delivery_window_hours": 36,
+            "consultant_approved": false
+          },
+          "result": "### [REQUISITION AUDIT: HITL APPROVAL REQUIRED]\n- **Proposed PO Reference**: `PO-850-2026-AIR-850`\n- **Status**: STATUS: HITL_APPROVAL_REQUIRED (APPROVAL_REQUIRED: TRUE)\n- **Total Financial Commitment**: $38,500.00\n- **Autonomous Authority Ceiling**: $25,000.00\n- **Budget Delta Over Threshold**: +$13,500.00\n- **Risk Assessment**: Charter freight commitment exceeds autonomous ceiling by +$13,500.00. Autonomous execution HALTED. Interactive Human-in-the-Loop (HITL) consultant sign-off REQUIRED."
+        }
+      },
+      {
+        "sender": "Consultant_Approver",
+        "content": "\ud83d\udee1\ufe0f **CONSULTANT GOVERNANCE REVIEW**: I am reviewing the \\$38,500.00 air charter requisition for 850 units. Projected fleet revenue across Denver, Boston, and Chicago reaches \\$89,100 (\\$99.00 retail MSRP). Even after accounting for the \\$5,350 air freight fee, gross margin remains solid at 56.8% (\\$50,600 gross profit).\n\n**EXECUTIVE DECISION**: Given high promotional upside and customer lifetime value risk, expenditure is **FORMALLY AUTHORIZED**."
+      },
+      {
+        "sender": "Admin_Executor",
+        "content": "Re-submitting charter purchase order with verified consultant authorization.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "CHARTER-AIR-CARGO",
+            "sku": "SKU-4092",
+            "units": 850,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 5350.0,
+            "delivery_window_hours": 36,
+            "consultant_approved": true
+          },
+          "result": "### [EDI 850 PURCHASE ORDER CONFIRMATION]\n- **PO Reference Number**: `PO-850-2026-AIR-CHARTER-AUTH`\n- **Vendor ID**: CHARTER-AIR-CARGO\n- **Line Item SKU**: SKU-4092\n- **Ordered Units**: 850 units\n- **Total Financial Commitment**: $38,500.00\n- **Committed Delivery SLA**: 36 hours guaranteed\n- **Approval Status**: STATUS: CONSULTANT-APPROVED (Authorized by HITL Consultant)\n- **Governance Tag**: EXECUTIVE_CHARTER_AUTHORIZED\n- **EDI Status**: TRANSMITTED_AND_ACKNOWLEDGED"
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has resolved the fleet surge via Authorized Air Charter:\n\n- **Target Locations**: Store #104, #101, #118\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Disruption Profile**: Fleet-Wide Peak Stockout (Dedicated Air Cargo Charter)\n- **Total Replenished Demand**: **900 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfers (Store #109)**: **50 units** (12h ground shuttle)\n  2. **Charter Air Cargo Partner**: **850 units** (PO: `PO-850-2026-AIR-CHARTER-AUTH`)\n- **Total Expediting Surcharges**: **\\$5,350.00**\n- **Total Capital Commitment**: **\\$38,500.00**\n- **Governance Gate**: **HITL SIGN-OFF COMPLETED** (Authorized by Consultant_Approver over \\$25k ceiling)\n- **Financial Return**: \\$89,100 retail revenue; 56.8% protected gross margin; zero store stockouts.\n\nTERMINATE"
+      }
+    ],
+    "rejected_messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\ud83d\udea8 **FLEET-WIDE STOCKOUT CRISIS**: A nationwide marketing blitz has depleted inventory across all regional flagship locations. Store #104, #101, and #118 require **900 total units** of SKU-4092 within **36 hours**.\n\nGround freight and scheduled rail cannot meet this window. We need an emergency air cargo solution immediately."
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Auditing regional distribution and sister stores for 900 units across Denver, Boston, and Chicago. Calling `validate_stock_levels(sku='SKU-4092')`.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [FLEET SURGE AUDIT] ===\n- Sister Store #109 (Boulder): 50 units transferable excess.\n- Regional DCs: 0 units available.\n- FLEET DEFICIT: 850 units must be sourced via dedicated air charter freight."
+        }
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Contracting chartered cargo logistics partner `CHARTER-AIR-CARGO` for 850 units at wholesale \\$39.00/unit plus a dedicated chartered Boeing 737 cargo block fee of \\$3,400.00 and handling fees (\\$1,950.00).\n\n- **Wholesale Goods**: 850 \u00d7 \\$39.00 = \\$33,150.00\n- **Charter Flight Surcharge**: \\$3,400.00\n- **Emergency Ramp Handling**: \\$1,950.00\n- **Total Financial Commitment**: **\\$38,500.00**\n\nAttempting automated PO execution via `generate_purchase_order`.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "CHARTER-AIR-CARGO",
+            "sku": "SKU-4092",
+            "units": 850,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 5350.0,
+            "delivery_window_hours": 36,
+            "consultant_approved": false
+          },
+          "result": "### [REQUISITION AUDIT: HITL APPROVAL REQUIRED]\n- **Proposed PO Reference**: `PO-850-2026-AIR-850`\n- **Status**: STATUS: HITL_APPROVAL_REQUIRED (APPROVAL_REQUIRED: TRUE)\n- **Total Financial Commitment**: $38,500.00\n- **Autonomous Authority Ceiling**: $25,000.00\n- **Budget Delta Over Threshold**: +$13,500.00\n- **Risk Assessment**: Charter freight commitment exceeds autonomous ceiling by +$13,500.00. Autonomous execution HALTED. Interactive Human-in-the-Loop (HITL) consultant sign-off REQUIRED."
+        }
+      },
+      {
+        "sender": "Consultant_Approver",
+        "content": "\ud83d\udee1\ufe0f **CONSULTANT GOVERNANCE REVIEW [REQUISITION REJECTED]**: Requisition of \\$38,500.00 exceeds our autonomous spending limit (\\$25,000.00) by +\\$13,500.00 due to premium charter fees.\n\n**EXECUTIVE DECISION**: Dedicated aircraft charter is **REJECTED**. The order is instructed to be **CAPPED at the \\$25,000.00 ceiling** (550 units via scheduled commercial air freight), with remaining stores balancing locally."
+      },
+      {
+        "sender": "Admin_Executor",
+        "content": "Re-submitting adjusted freight order enforcing corporate \\$25,000.00 spending ceiling.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "CHARTER-AIR-CARGO",
+            "sku": "SKU-4092",
+            "units": 550,
+            "unit_cost": 39.0,
+            "shipping_surcharge": 3400.0,
+            "delivery_window_hours": 36,
+            "consultant_approved": false
+          },
+          "result": "### [EDI 850 PURCHASE ORDER CONFIRMATION - CAPPED AT CEILING]\n- **PO Reference Number**: `PO-850-2026-AIR-CAPPED`\n- **Vendor ID**: CHARTER-AIR-CARGO\n- **Line Item SKU**: SKU-4092\n- **Ordered Units**: 550 units (Capped from 850 requested)\n- **Base Wholesale Subtotal**: $21,450.00\n- **Commercial Air Freight**: $3,400.00\n- **Total Financial Commitment**: $24,850.00\n- **Approval Status**: STATUS: CAPPED_AT_LIMIT (Within $25k Ceiling)\n- **EDI Status**: TRANSMITTED_AND_ACKNOWLEDGED"
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has concluded under Executive Capped Governance:\n\n- **Target Locations**: Store #104, #101, #118\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Disruption Profile**: Fleet-Wide Peak Stockout (Executive Capped Allocation)\n- **Total Replenished Demand**: **600 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfers (Store #109)**: **50 units** (12h ground shuttle)\n  2. **Commercial Air Freight (Capped PO)**: **550 units** (PO: `PO-850-2026-AIR-CAPPED`)\n- **Total Expediting Surcharges**: **\\$3,400.00**\n- **Total Capital Commitment**: **\\$24,850.00**\n- **Governance Gate**: **\u26a0\ufe0f REQUISITION REJECTED / CAPPED AT \\$25K** (Capital ceiling enforced)\n- **Financial Return**: \\$59,400 protected revenue; capital limit strictly preserved.\n\nTERMINATE"
+      }
+    ],
+    "metrics": {
+      "allocated_units": 900,
+      "transfer_units": 50,
+      "vendor_units": 850,
+      "transfer_source": "Store #109 (Boulder 50u)",
+      "vendor_source": "CHARTER-AIR-CARGO",
+      "expediting_surcharges": 5350.0,
+      "total_commitment": 38500.0,
+      "governance_badge": "\ud83d\udee1\ufe0f HITL SIGN-OFF COMPLETED",
+      "sla_hours": 36
+    },
+    "pending_metrics": {
+      "allocated_units": 50,
+      "transfer_units": 50,
+      "vendor_units": 850,
+      "transfer_source": "Store #109 (Boulder 50u)",
+      "vendor_source": "CHARTER-AIR-CARGO (PENDING SIGN-OFF)",
+      "expediting_surcharges": 5350.0,
+      "total_commitment": 38500.0,
+      "governance_badge": "\ud83d\udea8 PENDING HITL APPROVAL",
+      "sla_hours": 36
+    },
+    "rejected_metrics": {
+      "allocated_units": 600,
+      "transfer_units": 50,
+      "vendor_units": 550,
+      "transfer_source": "Store #109 (Boulder 50u)",
+      "vendor_source": "CHARTER-AIR-CARGO (CAPPED)",
+      "expediting_surcharges": 3400.0,
+      "total_commitment": 24850.0,
+      "governance_badge": "\u26a0\ufe0f REQUISITION REJECTED / CAPPED AT $25K",
+      "sla_hours": 36
+    }
+  },
+  "ice_storm": {
+    "id": "ice_storm",
+    "title": "Regional DC Ice Storm Gridlock",
+    "icon": "\u2744\ufe0f",
+    "description": "Blizzard shuts down central DC transit (> 96h delay). Local chain-route hot-shots deployed.",
+    "sourcing_summary": "DC bypassed. Sibling Store #109 (18u) + secondary local distributor (32u).",
+    "default_demand": 50,
+    "governance_status": "AUTO-APPROVED (< $25,000 threshold)",
+    "messages": [
+      {
+        "sender": "Store_Operations_Lead",
+        "content": "\u26a0\ufe0f **WEATHER EMERGENCY ALERT**: Severe ice storms across the Midwest have closed interstate highways and grounded regional air freight hubs. Central DC reports guaranteed transit delays > 96 hours.\n\nStore #104 has 0 units of SKU-4092. If we rely on our central DC, we will miss our entire weekend promotion. Can we source exclusively through local pass-through routes?"
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "Assessing logistics viability. Executing `validate_stock_levels(sku='SKU-4092')` with weather disruption parameters.",
+        "tool_call": {
+          "tool": "validate_stock_levels",
+          "args": {
+            "sku": "SKU-4092"
+          },
+          "result": "=== INVENTORY AVAILABILITY REPORT: SKU-4092 [WEATHER ALERT: REGIONAL ICE STORM] ===\n- Central DC: 50 units available (CRITICAL DELAY: Highway closures & grounded flights \u2014 transit degraded to 96+ hours [GUARANTEED SLA BREACH]).\n- Sibling Store #109 (Boulder): 18 units on-hand (Local 24-mile route PASSABLE via tire chains; 12h delivery).\n- Secondary Local Distributor: 32 units in Denver suburban depot (Clear surface route; 24h delivery).\n- LOGISTICS STATUS: DC_REGIONAL_GRIDLOCK (Bypass Central DC entirely)."
+        }
+      },
+      {
+        "sender": "Vendor_Procurement_Lead",
+        "content": "Central DC is officially bypassed. Contracting secondary local supplier `DIST-LOCAL-DEPOT` for the remaining 32 units at \\$39.50/unit + \\$6.50/unit tire-chained hot-shot van fee (\\$208.00 freight).\n\nSubmitting emergency purchase order.",
+        "tool_call": {
+          "tool": "generate_purchase_order",
+          "args": {
+            "vendor_id": "DIST-LOCAL-DEPOT",
+            "sku": "SKU-4092",
+            "units": 32,
+            "unit_cost": 39.5,
+            "shipping_surcharge": 208.0,
+            "delivery_window_hours": 24
+          },
+          "result": "### [EDI 850 PURCHASE ORDER CONFIRMATION]\n- **PO Reference Number**: `PO-850-2026-ICE-9042`\n- **Vendor ID**: DIST-LOCAL-DEPOT\n- **Ordered Units**: 32 units\n- **Base Wholesale Subtotal**: $1,264.00\n- **Expedited Freight Surcharge**: $208.00 (Tire-chained hot-shot van)\n- **Total Financial Commitment**: $1,472.00\n- **Committed Transit SLA**: 24 hours guaranteed\n- **Approval Status**: STATUS: AUTO-APPROVED (Under $25,000 threshold)\n- **EDI Status**: TRANSMITTED_AND_ACKNOWLEDGED"
+        }
+      },
+      {
+        "sender": "Inventory_Merchandising_Lead",
+        "content": "### \ud83d\udccb RESOLUTION CONSENSUS: INVENTORY ESCALATION\n\nThe multi-agent autonomous replenishment escalation has successfully bypassed the regional DC ice storm:\n\n- **Target Store**: Store #104 (Denver Downtown)\n- **Crisis SKU**: SKU-4092 (Vintage Stretch Denim 32x32)\n- **Disruption Profile**: Regional DC Ice Storm Gridlock (> 96h Highway Closure)\n- **Total Replenished Demand**: **50 units**\n- **Sourcing Allocation Split**:\n  1. **Intra-Store Transfer (Store #109)**: **18 units** (12h local chained-van route)\n  2. **Local Metro Distributor (DIST-LOCAL-DEPOT)**: **32 units** (24h hot-shot delivery; PO: `PO-850-2026-ICE-9042`)\n- **Total Expediting Surcharges**: **\\$208.00**\n- **Total Capital Commitment**: **\\$1,472.00**\n- **Governance Gate**: **AUTO-APPROVED** (Spending \\$1,472.00 is well below \\$25,000 threshold)\n- **SLA Compliance**: 100% delivered in < 24 hours. Central DC gridlock completely bypassed.\n\nTERMINATE"
+      }
+    ],
+    "metrics": {
+      "allocated_units": 50,
+      "transfer_units": 18,
+      "vendor_units": 32,
+      "transfer_source": "Store #109 (Chained Shuttle)",
+      "vendor_source": "DIST-LOCAL-DEPOT",
+      "expediting_surcharges": 208.0,
+      "total_commitment": 1472.0,
+      "governance_badge": "\ud83d\udfe2 AUTO-APPROVED",
+      "sla_hours": 24
+    }
+  }
+}

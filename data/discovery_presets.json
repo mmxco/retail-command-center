@@ -1,0 +1,227 @@
+{
+  "https://www.buckle.com": {
+    "account_name": "The Buckle, Inc.",
+    "domain": "https://www.buckle.com",
+    "retail_tier": "Specialty Apparel Chain",
+    "annual_revenue": "$1.26 Billion",
+    "headcount": "8,200 employees",
+    "pain_points": [
+      {
+        "category": "POS-to-ERP Sync Latency",
+        "title": "Legacy AS400 Batch Latency",
+        "metric_badge": "6-8hr Sync Lag",
+        "technical_gap": "Store POS terminals rely on end-of-day batch flat-file polling to synchronize with legacy on-prem AS400 core.",
+        "operational_friction": "Store associates sell against phantom stock during peak weekend promotional surges, leading to 14% BOPIS order cancellations.",
+        "financial_impact": "$18.4M annual revenue leakage and elevated customer churn in denim category.",
+        "affected_executives": [
+          "Chief Information Officer",
+          "VP of Retail Operations"
+        ]
+      },
+      {
+        "category": "Promotional Markdown Addiction",
+        "title": "Margin Degradation via Reactive Markdowns",
+        "metric_badge": "38% Promo Dependency",
+        "technical_gap": "Absence of real-time elasticity modeling; pricing desk manually schedules flat 25-40% discount events across regional malls.",
+        "operational_friction": "Stores over-discount slow-moving seasonal inventory instead of triggering localized intra-chain transfers to flagship stores.",
+        "financial_impact": "420 bps gross margin erosion; balance sheet asset write-downs exceed $12M annually under RIM cost complement.",
+        "affected_executives": [
+          "VP of Merchandising",
+          "Chief Financial Officer"
+        ]
+      },
+      {
+        "category": "Omnichannel Return Friction",
+        "title": "Isolated Reverse Logistics Island",
+        "metric_badge": "22% Return Rate",
+        "technical_gap": "E-commerce digital returns portal decoupled from store POS inventory ledger; store returns take 72 hours to re-enter available-to-promise (ATP).",
+        "operational_friction": "High-value returned denim sits stranded in backrooms during peak selling windows, missing full-price turnover.",
+        "financial_impact": "$6.2M in stranded working capital and unnecessary replacement vendor purchase orders.",
+        "affected_executives": [
+          "VP of Supply Chain",
+          "VP of Omnichannel"
+        ]
+      }
+    ],
+    "tech_stack": {
+      "ecommerce_platform": "Salesforce Commerce Cloud (SFCC)",
+      "point_of_sale": "Aptos POS / Legacy NCR",
+      "erp_core": "IBM AS400 / Infor M3 Merchandising",
+      "order_management": "Manhattan Active Omni (Legacy Custom Bridge)",
+      "warehouse_supply_chain": "Manhattan SCALE WMS",
+      "signals": [
+        "Batch ETL scripts detected",
+        "Delayed ATP polling",
+        "Fragmented loyalty database"
+      ]
+    },
+    "discovery_questions": [
+      {
+        "persona": "Chief Information Officer (CIO)",
+        "theme": "Real-time ATP Synchronization",
+        "question": "When store associates fulfill Buy-Online-Pickup-In-Store orders on Saturday afternoons, how many minutes of inventory latency elapse before your central order broker decrements store physical buffer?"
+      },
+      {
+        "persona": "VP of Merchandising",
+        "theme": "Markdown Shock Mitigation",
+        "question": "How does your team currently measure the balance sheet asset write-down impact under RIM when executing mid-season 30% clearance markdowns across underperforming Tier 2 regional stores?"
+      },
+      {
+        "persona": "VP of Supply Chain",
+        "theme": "Intra-Network Sourcing vs. Vendor Reorders",
+        "question": "What automated logic currently governs whether an urgent store stockout is satisfied via sibling store rebalance versus an emergency vendor expedited drop-ship with freight surcharges?"
+      }
+    ],
+    "gdocs_url": "https://docs.google.com/document/d/1_Buckle_Executive_Discovery_Brief_2026_Sample/edit?usp=sharing"
+  },
+  "https://www.ralphlauren.com": {
+    "account_name": "Ralph Lauren Corporation",
+    "domain": "https://www.ralphlauren.com",
+    "retail_tier": "Flagship Tier 1 Enterprise",
+    "annual_revenue": "$6.63 Billion",
+    "headcount": "23,300 employees",
+    "pain_points": [
+      {
+        "category": "Global Allocation & Replenishment Latency",
+        "title": "Cross-Border ERP Stock Disconnect",
+        "metric_badge": "12-18hr Global Lag",
+        "technical_gap": "Disparate regional SAP instances (Americas, EMEA, APAC) with fragmented middleware integration.",
+        "operational_friction": "Regional merchandising managers lack unified visibility into factory production commits and port delay queues.",
+        "financial_impact": "$45M+ in expedited air-freight surcharges and unfulfilled seasonal demand.",
+        "affected_executives": [
+          "Chief Supply Chain Officer",
+          "Global VP of Logistics"
+        ]
+      },
+      {
+        "category": "Brand Protection & Full-Price Preservation",
+        "title": "Clearance Channel Cannibalization",
+        "metric_badge": "28% Off-Price Mix",
+        "technical_gap": "Disconnected pricing engines between full-price flagships and factory outlet channels.",
+        "operational_friction": "Excess seasonal styles are liquidated into outlet stores prematurely rather than balanced across high-turn regional stores.",
+        "financial_impact": "310 bps brand margin dilution and structural gross margin compression.",
+        "affected_executives": [
+          "Chief Commercial Officer",
+          "VP of Retail Merchandising"
+        ]
+      },
+      {
+        "category": "Unified In-Store Clienteling & Inventory",
+        "title": "Fragmented VIP Endless Aisle",
+        "metric_badge": "9% Missed Conversions",
+        "technical_gap": "Store associate mobile clienteling devices lack sub-second inventory reservation APIs into central DC buffers.",
+        "operational_friction": "VIP clients request sold-out runway apparel sizes that associates cannot reliably promise for next-day white-glove delivery.",
+        "financial_impact": "$14.8M in lost high-margin luxury basket value.",
+        "affected_executives": [
+          "Head of Global Retail Stores",
+          "Chief Customer Officer"
+        ]
+      }
+    ],
+    "tech_stack": {
+      "ecommerce_platform": "Custom Headless Salesforce Commerce Cloud",
+      "point_of_sale": "Oracle Retail Xstore Suite",
+      "erp_core": "SAP S/4HANA Fashion and Vertical Business",
+      "order_management": "Sterling Commerce OMS (Custom Containerized)",
+      "warehouse_supply_chain": "Manhattan Active WMS",
+      "signals": [
+        "Hybrid multi-cloud SAP integration",
+        "Event-driven Kafka streaming",
+        "Global tariff optimization layers"
+      ]
+    },
+    "discovery_questions": [
+      {
+        "persona": "Chief Information Officer",
+        "theme": "Sub-Second Global ATP Orchestration",
+        "question": "What architectural overhead currently prevents your flagship mobile POS clienteling app from reserving luxury inventory directly in trans-continental distribution centers?"
+      },
+      {
+        "persona": "VP of Merchandising",
+        "theme": "Asset Preservation & Gross Margin Return",
+        "question": "How do your seasonal markdown strategies account for the Retail Inventory Method cost complement write-downs across your 300+ global boutique footprints?"
+      },
+      {
+        "persona": "Chief Supply Chain Officer",
+        "theme": "Autonomous Sourcing Disruption Resilience",
+        "question": "During overseas port disruptions or acute logistics bottlenecks, what automated decisioning platform reallocates factory inbound deliveries before costly air freight is booked?"
+      }
+    ],
+    "gdocs_url": "https://docs.google.com/document/d/1_RalphLauren_Enterprise_Brief_2026_Sample/edit?usp=sharing"
+  },
+  "https://www.lululemon.com": {
+    "account_name": "Lululemon Athletica Inc.",
+    "domain": "https://www.lululemon.com",
+    "retail_tier": "Specialty Athletic Retail",
+    "annual_revenue": "$9.6 Billion",
+    "headcount": "38,000 employees",
+    "pain_points": [
+      {
+        "category": "High-Velocity Core SKU Replenishment",
+        "title": "Never-Out-of-Stock (NOOS) Allocation Lag",
+        "metric_badge": "99.2% Sell-Through",
+        "technical_gap": "Forecasting algorithms fail to catch viral TikTok colorway surges in real-time, resulting in localized 0-on-hand outages.",
+        "operational_friction": "Flagship stores in major metropolitan areas run completely out of key sizes while suburban stores hold excess days of supply.",
+        "financial_impact": "$32M in missed revenue and secondary market margin capture.",
+        "affected_executives": [
+          "VP of Merchandise Planning",
+          "Head of Digital Retail"
+        ]
+      },
+      {
+        "category": "Store-as-a-Hub Fulfillment Efficiency",
+        "title": "Associate Pick & Pack Disruption",
+        "metric_badge": "34% Store-Ship Mix",
+        "technical_gap": "Store inventory pick-routing logic lacks dynamic floor-traffic pacing, overwhelming store staff during busy retail hours.",
+        "operational_friction": "Floor associates are pulled from guest assistance to pack shipping boxes, creating frontline service bottlenecks.",
+        "financial_impact": "12% decline in guest NPS and $8.5M in incremental overtime labor cost.",
+        "affected_executives": [
+          "VP of Store Operations",
+          "VP of Customer Experience"
+        ]
+      },
+      {
+        "category": "RFID-to-POS Discrepancy Reconciliation",
+        "title": "RFID Phantom Stock Drift",
+        "metric_badge": "1.8% Shrink Drift",
+        "technical_gap": "Handheld weekly RFID scans show discrepancies with POS real-time register receipts.",
+        "operational_friction": "BOPIS orders fail when system indicates 1 unit available, but physical unit was misplaced in fitting rooms.",
+        "financial_impact": "$11.2M in annual inventory shrinkage and expedited re-shipping costs.",
+        "affected_executives": [
+          "VP of Loss Prevention & Asset Protection",
+          "CIO"
+        ]
+      }
+    ],
+    "tech_stack": {
+      "ecommerce_platform": "Headless AWS / CommerceTools / React",
+      "point_of_sale": "Oracle Retail Xstore POS",
+      "erp_core": "SAP S/4HANA Enterprise",
+      "order_management": "Manhattan Active Omni OMS",
+      "warehouse_supply_chain": "Manhattan WMS Cloud",
+      "signals": [
+        "Full item-level RFID tracking",
+        "Microservices architecture",
+        "Real-time Kafka inventory events"
+      ]
+    },
+    "discovery_questions": [
+      {
+        "persona": "VP of Merchandise Planning",
+        "theme": "Viral SKU Auto-Rebalancing",
+        "question": "When an athletic wear colorway goes viral on social media, what autonomous triggers rebalance inventory from regional stores to flagship locations before stockouts occur?"
+      },
+      {
+        "persona": "Head of Store Operations",
+        "theme": "Omnichannel Store Labor Balancing",
+        "question": "How do you protect frontline associate guest engagement during high-volume digital ship-from-store waves without ballooning peak labor spend?"
+      },
+      {
+        "persona": "Chief Information Officer",
+        "theme": "Item-Level RFID Real-Time Ledger",
+        "question": "How closely synchronized is your item-level RFID scanning infrastructure with your real-time available-to-promise engine across all 650+ retail stores?"
+      }
+    ],
+    "gdocs_url": "https://docs.google.com/document/d/1_Lululemon_Executive_Brief_2026_Sample/edit?usp=sharing"
+  }
+}
