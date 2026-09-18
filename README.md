@@ -1,6 +1,10 @@
 # 🛍️ Retail AI Pre-Sales Command Center
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mmxco/retail-command-center)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://bookish-cod-vxrq4p6pqqgfpvwp-8501.app.github.dev/)
+
+> 💡 **Browser Launch Note**: When Codespaces finishes initializing, Google Chrome or Edge may block the new tab automatically. If the Streamlit dashboard doesn't appear in a new window:
+> 1. Look for the **Pop-up blocked** icon (🚫) in your browser address bar and select **"Always allow pop-ups from github.dev"**, OR
+> 2. Open the **Ports** tab in the bottom tray of the editor and click the **Globe icon** (Port 8501) to launch the Command Center manually.
 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35+-FF4B4B.svg)](https://streamlit.io/)
@@ -139,7 +143,11 @@ docker run -d `
 ```
 
 ### 3. GitHub Codespaces / Dev Containers
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mmxco/retail-command-center)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://bookish-cod-vxrq4p6pqqgfpvwp-8501.app.github.dev/)
+
+> 💡 **Browser Launch Note**: When Codespaces finishes initializing, Google Chrome or Edge may block the new tab automatically. If the Streamlit dashboard doesn't appear in a new window:
+> 1. Look for the **Pop-up blocked** icon (🚫) in your browser address bar and select **"Always allow pop-ups from github.dev"**, OR
+> 2. Open the **Ports** tab in the bottom tray of the editor and click the **Globe icon** (Port 8501) to launch the Command Center manually.
 
 Click the badge above to launch an instant cloud workstation in your browser. Streamlit (port 8501) automatically compiles and forwards to your browser in under 60 seconds.
 
